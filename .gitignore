@@ -1,0 +1,7 @@
+model/__pycache__/__init__.cpython-314.pyc
+model/__pycache__/decision_tree.cpython-314.pyc
+model/__pycache__/knn.cpython-314.pyc
+model/__pycache__/logistic_regression.cpython-314.pyc
+model/__pycache__/naive_bayes.cpython-314.pyc
+model/__pycache__/preprocess.cpython-314.pyc
+model/__pycache__/random_forest.cpython-314.pyc
