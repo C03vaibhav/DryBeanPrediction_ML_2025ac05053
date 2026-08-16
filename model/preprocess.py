@@ -7,7 +7,8 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 def prepare_training_data(
     file_path,
     test_size=0.2,
-    random_state=42
+    random_state=42,
+    shuffle=True
 ):
 
     df = pd.read_csv(file_path)
@@ -48,7 +49,8 @@ def prepare_training_data(
         y,
         test_size=test_size,
         random_state=random_state,
-        stratify=y
+        stratify=y,
+        shuffle=shuffle
     )
 
     scaler = StandardScaler()
