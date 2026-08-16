@@ -1,21 +1,3 @@
-"""
-===========================================================
-Logistic Regression Model
-Dry Bean Classification
-===========================================================
-
-This module trains a Logistic Regression model using the
-common preprocessing module.
-
-When this module is imported, the model is automatically
-trained and made available for prediction.
-
-Logistic Regression requires feature scaling, so the scaled
-training data is used.
-
-===========================================================
-"""
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
@@ -28,18 +10,7 @@ from sklearn.metrics import (
 )
 
 from model.preprocess import prepare_training_data
-
-
-# ===========================================================
-# Dataset Path
-# ===========================================================
-
 FILE_PATH = "Dry_Bean_Dataset.csv"
-
-
-# ===========================================================
-# Prepare Training Data
-# ===========================================================
 
 (
     X_train,
@@ -53,30 +24,15 @@ FILE_PATH = "Dry_Bean_Dataset.csv"
     feature_names
 ) = prepare_training_data(FILE_PATH)
 
-
-# ===========================================================
-# Create Logistic Regression Model
-# ===========================================================
-
 model = LogisticRegression(
     max_iter=1000,
     random_state=42
 )
 
-
-# ===========================================================
-# Train the Model
-# ===========================================================
-
 model.fit(
     X_train_scaled,
     y_train
 )
-
-
-# ===========================================================
-# Evaluate the Model
-# ===========================================================
 
 y_pred = model.predict(X_test_scaled)
 
@@ -121,11 +77,6 @@ mcc = matthews_corrcoef(
     y_pred
 )
 
-
-# ===========================================================
-# Display Model Performance
-# ===========================================================
-
 print("\n==============================================")
 print("Logistic Regression")
 print("==============================================")
@@ -149,25 +100,5 @@ print(
     )
 )
 
-
-# ===========================================================
-# Prediction Function
-# ===========================================================
-
 def predict(test_data):
-    """
-    Make predictions using the trained Logistic Regression
-    model.
-
-    Parameters
-    ----------
-    test_data : array-like
-        Preprocessed and scaled test data.
-
-    Returns
-    -------
-    predictions : numpy.ndarray
-        Predicted encoded class labels.
-    """
-
     return model.predict(test_data)

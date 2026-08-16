@@ -1,29 +1,3 @@
-"""
-===========================================================
-Streamlit Application
-Dry Bean Classification
-===========================================================
-
-This application allows the user to:
-
-    1. Select a machine learning model
-    2. View model performance
-    3. View confusion matrix
-    4. View classification report
-    5. Compare different trained models
-    6. Upload new test data
-    7. Predict the Dry Bean class
-
-Available models:
-    - Logistic Regression
-    - Decision Tree
-    - K-Nearest Neighbors
-    - Gaussian Naive Bayes
-    - Random Forest
-
-===========================================================
-"""
-
 import streamlit as st
 import pandas as pd
 from sklearn.metrics import confusion_matrix, classification_report
@@ -33,25 +7,13 @@ from model.preprocess import (
     prepare_test_data
 )
 
-# ===========================================================
-# Page Configuration
-# ===========================================================
-
 st.set_page_config(
     page_title="Dry Bean Classifier",
     page_icon="🌱",
     layout="wide"
 )
 
-# ===========================================================
-# Dataset Path
-# ===========================================================
-
 DATASET_PATH = "Dry_Bean_Dataset.csv"
-
-# ===========================================================
-# Model Names
-# ===========================================================
 
 MODEL_OPTIONS = [
     "Logistic Regression",
@@ -61,19 +23,11 @@ MODEL_OPTIONS = [
     "Random Forest"
 ]
 
-# ===========================================================
-# Models that require scaled data
-# ===========================================================
-
 SCALED_MODELS = [
     "Logistic Regression",
     "K-Nearest Neighbors",
     "Gaussian Naive Bayes"
 ]
-
-# ===========================================================
-# Model Loading Function
-# ===========================================================
 
 @st.cache_resource
 def load_model(model_name):
@@ -93,10 +47,6 @@ def load_model(model_name):
         from model import random_forest
         return random_forest
     return None
-
-# ===========================================================
-# Load Evaluation Dataset
-# ===========================================================
 
 @st.cache_data
 def load_evaluation_data():
@@ -121,10 +71,6 @@ def load_evaluation_data():
         scaler
     )
 
-# ===========================================================
-# Calculate Model Metrics (read from module)
-# ===========================================================
-
 def calculate_model_metrics(model_module):
     return (
         model_module.accuracy,
@@ -134,10 +80,6 @@ def calculate_model_metrics(model_module):
         model_module.auc,
         model_module.mcc
     )
-
-# ===========================================================
-# Calculate Results for All Models
-# ===========================================================
 
 @st.cache_data
 def get_all_model_results():
@@ -157,11 +99,7 @@ def get_all_model_results():
         )
     return pd.DataFrame(results)
 
-# ===========================================================
-# Main Application
-# ===========================================================
-
-st.title("🌱 Dry Bean Classification")
+st.title("Dry Bean Classification")
 st.write("Select a trained machine learning model and upload Dry Bean test data to predict its class.")
 
 # Sidebar
@@ -170,7 +108,7 @@ selected_model = st.sidebar.selectbox("Choose a model:", MODEL_OPTIONS)
 st.sidebar.info(selected_model)
 
 # Dataset Information
-st.header("📊 Dataset Information")
+st.header("Dataset Information")
 try:
     dataset = pd.read_csv(DATASET_PATH)
     col1, col2, col3 = st.columns(3)
@@ -191,7 +129,7 @@ with st.spinner(f"Loading {selected_model}..."):
 X_test, X_test_scaled, y_test, evaluation_label_encoder, feature_names, evaluation_scaler = load_evaluation_data()
 
 # Selected Model Performance
-st.header("📈 Model Performance")
+st.header("Model Performance")
 accuracy, precision, recall, f1, auc, mcc = calculate_model_metrics(model_module)
 y_pred = model_module.predict(X_test_scaled if selected_model in SCALED_MODELS else X_test)
 
@@ -205,7 +143,7 @@ with col5: st.metric("F1 Score", f"{f1:.4f}")
 with col6: st.metric("MCC", f"{mcc:.4f}")
 
 # Confusion Matrix
-st.header("🔲 Confusion Matrix")
+st.header("Confusion Matrix")
 cm = confusion_matrix(y_test, y_pred)
 class_names = evaluation_label_encoder.classes_
 cm_df = pd.DataFrame(cm,
@@ -214,13 +152,13 @@ cm_df = pd.DataFrame(cm,
 st.dataframe(cm_df, use_container_width=True)
 
 # Classification Report
-st.header("📋 Classification Report")
+st.header("Classification Report")
 report = classification_report(y_test, y_pred, target_names=class_names, output_dict=True, zero_division=0)
 report_df = pd.DataFrame(report).transpose()
 st.dataframe(report_df, use_container_width=True)
 
 # Model Comparison
-st.header("🏆 Model Comparison")
+st.header("Model Comparison")
 try:
     comparison_df = get_all_model_results()
     display_comparison = comparison_df.copy()
@@ -233,17 +171,13 @@ try:
 except Exception as error:
     st.warning(f"Unable to generate model comparison: {error}")
 
-# ===========================================================
-# Upload Test Data
-# ===========================================================
-
-st.sidebar.header("Upload Test Data")
-uploaded_file = st.sidebar.file_uploader("Upload a CSV file", type=["csv"])
+st.header("Upload Test Data")
+uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
 
 if uploaded_file is not None:
     try:
         test_data = pd.read_csv(uploaded_file)
-        st.success("✅ Test data uploaded successfully!")
+        st.success("Test data uploaded successfully!")
 
         # Show preview
         with st.expander("View Uploaded Test Data"):
@@ -266,7 +200,7 @@ if uploaded_file is not None:
         # Decode numeric predictions back to original class names
         predicted_classes = evaluation_label_encoder.inverse_transform(y_pred_new)
 
-        st.header("🔮 Predictions on Uploaded Data")
+        st.header("Predictions on Uploaded Data")
         prediction_df = pd.DataFrame({
             "Predicted": predicted_classes
         })
@@ -279,4 +213,4 @@ else:
 
 # Footer
 st.markdown("---")
-st.caption("Dry Bean Classification | Machine Learning Project")
+st.caption("2025AC05053 | Cheruvu Tarun Rama Vaibhav | ML-Assignment-2")

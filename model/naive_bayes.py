@@ -1,21 +1,3 @@
-"""
-===========================================================
-Naive Bayes Model
-Dry Bean Classification
-===========================================================
-
-This module trains a Gaussian Naive Bayes model using the
-common preprocessing module.
-
-When this module is imported, the model is automatically
-trained and made available for prediction.
-
-The Dry Bean dataset contains numerical features, so
-Gaussian Naive Bayes is used.
-
-===========================================================
-"""
-
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import (
     accuracy_score,
@@ -28,19 +10,7 @@ from sklearn.metrics import (
 )
 
 from model.preprocess import prepare_training_data
-
-
-# ===========================================================
-# Dataset Path
-# ===========================================================
-
 FILE_PATH = "Dry_Bean_Dataset.csv"
-
-
-# ===========================================================
-# Prepare Training Data
-# ===========================================================
-
 (
     X_train,
     X_test,
@@ -53,30 +23,14 @@ FILE_PATH = "Dry_Bean_Dataset.csv"
     feature_names
 ) = prepare_training_data(FILE_PATH)
 
-
-# ===========================================================
-# Create Gaussian Naive Bayes Model
-# ===========================================================
-
 model = GaussianNB()
-
-
-# ===========================================================
-# Train the Model
-# ===========================================================
-
 model.fit(
     X_train_scaled,
     y_train
 )
 
-
-# ===========================================================
-# Evaluate the Model
-# ===========================================================
-
 y_pred = model.predict(X_test_scaled)
-y_prob = model.predict_proba(X_test_scaled)   # needed for AUC
+y_prob = model.predict_proba(X_test_scaled)
 
 accuracy = accuracy_score(y_test, y_pred)
 
@@ -110,11 +64,6 @@ f1 = f1_score(
 
 mcc = matthews_corrcoef(y_test, y_pred)
 
-
-# ===========================================================
-# Display Model Performance
-# ===========================================================
-
 print("\n==============================================")
 print("Gaussian Naive Bayes")
 print("==============================================")
@@ -138,24 +87,5 @@ print(
     )
 )
 
-
-# ===========================================================
-# Prediction Function
-# ===========================================================
-
 def predict(test_data):
-    """
-    Make predictions using the trained Gaussian Naive Bayes
-    model.
-
-    Parameters
-    ----------
-    test_data : array-like
-        Preprocessed and scaled test data.
-
-    Returns
-    -------
-    predictions : numpy.ndarray
-        Predicted encoded class labels.
-    """
     return model.predict(test_data)

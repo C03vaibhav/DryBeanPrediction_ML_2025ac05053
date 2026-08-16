@@ -1,21 +1,3 @@
-"""
-===========================================================
-Decision Tree Model
-Dry Bean Classification
-===========================================================
-
-This module trains a Decision Tree model using the common
-preprocessing module.
-
-When this module is imported, the model is automatically
-trained and made available for prediction.
-
-Decision Trees do not require feature scaling, so the
-original (unscaled) training data is used.
-
-===========================================================
-"""
-
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import (
     accuracy_score,
@@ -28,19 +10,7 @@ from sklearn.metrics import (
 )
 
 from model.preprocess import prepare_training_data
-
-
-# ===========================================================
-# Dataset Path
-# ===========================================================
-
 FILE_PATH = "Dry_Bean_Dataset.csv"
-
-
-# ===========================================================
-# Prepare Training Data
-# ===========================================================
-
 (
     X_train,
     X_test,
@@ -53,29 +23,14 @@ FILE_PATH = "Dry_Bean_Dataset.csv"
     feature_names
 ) = prepare_training_data(FILE_PATH)
 
-
-# ===========================================================
-# Create Decision Tree Model
-# ===========================================================
-
 model = DecisionTreeClassifier(
     random_state=42
 )
-
-
-# ===========================================================
-# Train the Model
-# ===========================================================
 
 model.fit(
     X_train,
     y_train
 )
-
-
-# ===========================================================
-# Evaluate the Model
-# ===========================================================
 
 y_pred = model.predict(X_test)
 
@@ -120,11 +75,6 @@ mcc = matthews_corrcoef(
     y_pred
 )
 
-
-# ===========================================================
-# Display Model Performance
-# ===========================================================
-
 print("\n==============================================")
 print("Decision Tree")
 print("==============================================")
@@ -148,24 +98,5 @@ print(
     )
 )
 
-
-# ===========================================================
-# Prediction Function
-# ===========================================================
-
 def predict(test_data):
-    """
-    Make predictions using the trained Decision Tree model.
-
-    Parameters
-    ----------
-    test_data : array-like
-        Preprocessed test data.
-
-    Returns
-    -------
-    predictions : numpy.ndarray
-        Predicted encoded class labels.
-    """
-
     return model.predict(test_data)
