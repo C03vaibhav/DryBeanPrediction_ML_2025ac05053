@@ -4,8 +4,30 @@
 
 **Dataset description:**
 - **Name:** Dry Bean Dataset (CSV expected as `Dry_Bean_Dataset.csv` in the project root).
-- **Target column:** `Class` (categorical label identifying bean type).
-- **Features:** Numerical morphological measurements (the repository code reads all columns except `Class` as input features). The preprocessing in [model/preprocess.py](model/preprocess.py#L1-L200) handles duplicate removal, label encoding, train/test splitting and standard scaling.
+- **Samples:** 13,611 rows (observations) in the full dataset.
+- **Target column:** `Class` (categorical label identifying bean type). There are 7 classes: `BARBUNYA`, `BOMBAY`, `CALI`, `DERMASON`, `HOROZ`, `SEKER`, `SIRA`.
+- **Class distribution (counts):**
+	- DERMASON: 3,546
+	- SIRA: 2,636
+	- SEKER: 2,027
+	- HOROZ: 1,928
+	- CALI: 1,630
+	- BARBUNYA: 1,322
+	- BOMBAY: 522
+- **Features (16 numeric columns):**
+	- `Area`: Pixel area of the bean shape.
+	- `Perimeter`: Perimeter length of the bean contour.
+	- `MajorAxisLength`: Length of the major axis of the fitted ellipse.
+	- `MinorAxisLength`: Length of the minor axis of the fitted ellipse.
+	- `AspectRation`: Ratio of major to minor axis (shape elongation).
+	- `Eccentricity`: Eccentricity of the fitted ellipse (shape property).
+	- `ConvexArea`: Area of the convex hull of the bean shape.
+	- `EquivDiameter`: Diameter of a circle with the same area as the bean.
+	- `Extent`: Ratio of object area to bounding box area.
+	- `Solidity`: Ratio of area to convex area (measure of concavity).
+	- `roundness`: Measure of roundness (derived feature).
+	- `Compactness`: Measure of compactness (derived feature).
+	- `ShapeFactor1`, `ShapeFactor2`, `ShapeFactor3`, `ShapeFactor4`: Additional shape descriptors used in the original dataset.
 
 **GitHub repository:** https://github.com/C03vaibhav/DryBeanPrediction_ML_2025ac05053
 
@@ -76,4 +98,9 @@ python model/random_forest.py
 
 Each script loads `Dry_Bean_Dataset.csv`, trains the model, prints evaluation metrics and returns the trained model objects when run as `__main__`.
  
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
 
