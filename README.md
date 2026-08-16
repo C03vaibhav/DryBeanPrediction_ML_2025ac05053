@@ -6,7 +6,6 @@
 - **Name:** Dry Bean Dataset (CSV expected as `Dry_Bean_Dataset.csv` in the project root).
 - **Target column:** `Class` (categorical label identifying bean type).
 - **Features:** Numerical morphological measurements (the repository code reads all columns except `Class` as input features). The preprocessing in [model/preprocess.py](model/preprocess.py#L1-L200) handles duplicate removal, label encoding, train/test splitting and standard scaling.
-- **Where to get it:** If you do not already have the file, obtain the dataset (for example, from the original source or course materials) and place `Dry_Bean_Dataset.csv` in the same folder as [app.py](app.py#L1).
 
 **GitHub repository:** Replace the URL below with your repository link (maintain the repo with all required files):
 
@@ -25,11 +24,11 @@ The Streamlit app [app.py](app.py#L1-L400) exposes training and prediction funct
 
 | ML Model Name | Accuracy | AUC | Precision | Recall | F1 | MCC |
 |---|---:|---:|---:|---:|---:|---:|
-| Logistic Regression | TBD | TBD | TBD | TBD | TBD | TBD |
-| Decision Tree | TBD | TBD | TBD | TBD | TBD | TBD |
-| KNN | TBD | TBD | TBD | TBD | TBD | TBD |
-| Naive Bayes | TBD | TBD | TBD | TBD | TBD | TBD |
-| Random Forest (Ensemble) | TBD | TBD | TBD | TBD | TBD | TBD |
+| Logistic Regression | 0.9195 | 0.9935 | 0.9201 | 0.9195 | 0.9197 | 0.9028 |
+| Decision Tree | 0.8955 | 0.9357 | 0.8954 | 0.8955 | 0.8953 | 0.8737 |
+| K-Nearest Neighbors | 0.9155 | 0.9811 | 0.9163 | 0.9155 | 0.9157 | 0.8978 |
+| Gaussian Naive Bayes | 0.8970 | 0.9899 | 0.8997 | 0.8970 | 0.8972 | 0.8762 |
+| Random Forest (Ensemble) | 0.9169 | 0.9905 | 0.9170 | 0.9169 | 0.9169 | 0.8995 |
 
 Populate these values by running the training for each model (see instructions below). Each model script prints evaluation metrics; the Streamlit app displays accuracy, precision, recall and F1 after training.
 
@@ -37,12 +36,12 @@ Populate these values by running the training for each model (see instructions b
 
 | ML Model Name | Observation about model performance |
 |---|---|
-| Logistic Regression | TBD |
-| Decision Tree | TBD |
-| KNN | TBD |
-| Naive Bayes | TBD |
-| Random Forest (Ensemble) | TBD |
-| Overall Winner for your dataset? | TBD |
+| Logistic Regression | Strong overall performance with the highest F1 (0.9197) and very high AUC (0.9935). |
+| Decision Tree | Lower performance than ensemble and linear models; more prone to overfitting (AUC 0.9357). |
+| KNN | Competitive accuracy and F1 (0.9157), performs well with scaled features. |
+| Naive Bayes | Good AUC (0.9899) but slightly lower overall F1 (0.8972) compared to top models. |
+| Random Forest (Ensemble) | High and consistent metrics (F1 0.9169), strong AUC and MCC—good ensemble choice. |
+| Overall Winner for my dataset? | Logistic Regression (best by F1: 0.9197) |
 
 **How to run the app and reproduce metrics**
 
